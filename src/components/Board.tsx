@@ -20,10 +20,17 @@ import { CardData } from '@/types';
 import data from '@/data/challenges.json';
 
 export function Board() {
-  const [cards, setCards] = useState<CardData[]>(data.cards as CardData[]);
+  // Always use JSON data as source of truth, only persist column positions
+  const [cardPositions, setCardPositions] = useState<Record<string, string>>({});
   const [activeCard, setActiveCard] = useState<CardData | null>(null);
   const [selectedChallenge, setSelectedChallenge] = useState<string>('all');
   const [selectedTask, setSelectedTask] = useState<CardData | null>(null);
+
+  // Merge JSON data with saved positions
+  const cards: CardData[] = (data.cards as CardData[]).map(card => ({
+    ...card,
+    columnId: cardPositions[card.id] || card.columnId
+  }));
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -61,55 +68,38 @@ export function Board() {
 
     if (data.columns.some((col) => col.id === overId)) {
       if (activeCardItem.columnId !== overId) {
-        setCards((prevCards) =>
-          prevCards.map((c) => (c.id === activeId ? { ...c, columnId: overId } : c))
-        );
+        setCardPositions(prev => ({ ...prev, [activeId]: overId }));
       }
       return;
     }
 
     if (overCard && activeCardItem.columnId !== overCard.columnId) {
-      setCards((prevCards) =>
-        prevCards.map((c) => (c.id === activeId ? { ...c, columnId: overCard.columnId } : c))
-      );
+      setCardPositions(prev => ({ ...prev, [activeId]: overCard.columnId }));
     }
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
     setActiveCard(null);
-    if (!over || active.id === over.id) return;
-
-    const activeId = active.id as string;
-    const overId = over.id as string;
-    const activeCardItem = cards.find((c) => c.id === activeId);
-    const overCard = cards.find((c) => c.id === overId);
-
-    if (!activeCardItem) return;
-
-    if (overCard && activeCardItem.columnId === overCard.columnId) {
-      const columnCards = cards.filter((c) => c.columnId === activeCardItem.columnId);
-      const activeIndex = columnCards.findIndex((c) => c.id === activeId);
-      const overIndex = columnCards.findIndex((c) => c.id === overId);
-
-      if (activeIndex !== overIndex) {
-        setCards((prevCards) => {
-          const newColumnCards = arrayMove(columnCards, activeIndex, overIndex);
-          const otherCards = prevCards.filter((c) => c.columnId !== activeCardItem.columnId);
-          return [...otherCards, ...newColumnCards];
-        });
-      }
-    }
   };
 
+  // Load saved positions from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('skar-pipeline-cards');
-    if (saved) setCards(JSON.parse(saved));
+    const saved = localStorage.getItem('skar-pipeline-positions');
+    if (saved) {
+      try {
+        setCardPositions(JSON.parse(saved));
+      } catch {
+        // ignore parse errors
+      }
+    }
   }, []);
 
+  // Save positions to localStorage
   useEffect(() => {
-    localStorage.setItem('skar-pipeline-cards', JSON.stringify(cards));
-  }, [cards]);
+    if (Object.keys(cardPositions).length > 0) {
+      localStorage.setItem('skar-pipeline-positions', JSON.stringify(cardPositions));
+    }
+  }, [cardPositions]);
 
   const handleOpenTask = (card: CardData) => {
     setSelectedTask(card);
