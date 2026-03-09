@@ -16,29 +16,8 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { Column } from './Column';
 import { Card } from './Card';
 import { TaskModal } from './TaskModal';
+import { CardData } from '@/types';
 import data from '@/data/challenges.json';
-
-interface Direcionais {
-  objetivo: string;
-  contexto: string;
-  passos: string[];
-  entregaveis: string[];
-  metricas_sucesso: string[];
-  dependencias: string[];
-  responsavel: string;
-  prazo_sugerido: string;
-}
-
-interface CardData {
-  id: string;
-  challengeId: string;
-  columnId: string;
-  title: string;
-  frente: string;
-  priority: 'high' | 'medium' | 'low';
-  description?: string;
-  direcionais?: Direcionais;
-}
 
 export function Board() {
   const [cards, setCards] = useState<CardData[]>(data.cards as CardData[]);
@@ -75,23 +54,23 @@ export function Board() {
 
     const activeId = active.id as string;
     const overId = over.id as string;
-    const activeCard = cards.find((c) => c.id === activeId);
+    const activeCardItem = cards.find((c) => c.id === activeId);
     const overCard = cards.find((c) => c.id === overId);
 
-    if (!activeCard) return;
+    if (!activeCardItem) return;
 
     if (data.columns.some((col) => col.id === overId)) {
-      if (activeCard.columnId !== overId) {
-        setCards((cards) =>
-          cards.map((c) => (c.id === activeId ? { ...c, columnId: overId } : c))
+      if (activeCardItem.columnId !== overId) {
+        setCards((prevCards) =>
+          prevCards.map((c) => (c.id === activeId ? { ...c, columnId: overId } : c))
         );
       }
       return;
     }
 
-    if (overCard && activeCard.columnId !== overCard.columnId) {
-      setCards((cards) =>
-        cards.map((c) => (c.id === activeId ? { ...c, columnId: overCard.columnId } : c))
+    if (overCard && activeCardItem.columnId !== overCard.columnId) {
+      setCards((prevCards) =>
+        prevCards.map((c) => (c.id === activeId ? { ...c, columnId: overCard.columnId } : c))
       );
     }
   };
@@ -103,20 +82,20 @@ export function Board() {
 
     const activeId = active.id as string;
     const overId = over.id as string;
-    const activeCard = cards.find((c) => c.id === activeId);
+    const activeCardItem = cards.find((c) => c.id === activeId);
     const overCard = cards.find((c) => c.id === overId);
 
-    if (!activeCard) return;
+    if (!activeCardItem) return;
 
-    if (overCard && activeCard.columnId === overCard.columnId) {
-      const columnCards = cards.filter((c) => c.columnId === activeCard.columnId);
+    if (overCard && activeCardItem.columnId === overCard.columnId) {
+      const columnCards = cards.filter((c) => c.columnId === activeCardItem.columnId);
       const activeIndex = columnCards.findIndex((c) => c.id === activeId);
       const overIndex = columnCards.findIndex((c) => c.id === overId);
 
       if (activeIndex !== overIndex) {
-        setCards((cards) => {
+        setCards((prevCards) => {
           const newColumnCards = arrayMove(columnCards, activeIndex, overIndex);
-          const otherCards = cards.filter((c) => c.columnId !== activeCard.columnId);
+          const otherCards = prevCards.filter((c) => c.columnId !== activeCardItem.columnId);
           return [...otherCards, ...newColumnCards];
         });
       }
@@ -131,6 +110,10 @@ export function Board() {
   useEffect(() => {
     localStorage.setItem('skar-pipeline-cards', JSON.stringify(cards));
   }, [cards]);
+
+  const handleOpenTask = (card: CardData) => {
+    setSelectedTask(card);
+  };
 
   return (
     <div className="min-h-screen bg-black">
@@ -201,7 +184,7 @@ export function Board() {
                 color={column.color}
                 cards={getColumnCards(column.id)}
                 challenges={challenges}
-                onOpenTask={(card) => setSelectedTask(card)}
+                onOpenTask={handleOpenTask}
               />
             ))}
           </div>

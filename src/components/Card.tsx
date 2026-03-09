@@ -2,17 +2,7 @@
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-
-interface Direcionais {
-  objetivo: string;
-  contexto: string;
-  passos: string[];
-  entregaveis: string[];
-  metricas_sucesso: string[];
-  dependencias: string[];
-  responsavel: string;
-  prazo_sugerido: string;
-}
+import { Direcionais } from '@/types';
 
 interface CardProps {
   id: string;
@@ -50,8 +40,7 @@ export function Card({ id, title, frente, priority, challengeEmoji, direcionais,
 
   const frenteColor = frenteColors[frente] || '#6b7280';
 
-  const handleClick = (e: React.MouseEvent) => {
-    // Only open modal on click, not drag
+  const handleClick = () => {
     if (!isDragging && onOpenModal) {
       onOpenModal();
     }

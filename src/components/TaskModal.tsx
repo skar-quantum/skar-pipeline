@@ -1,17 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-
-interface Direcionais {
-  objetivo: string;
-  contexto: string;
-  passos: string[];
-  entregaveis: string[];
-  metricas_sucesso: string[];
-  dependencias: string[];
-  responsavel: string;
-  prazo_sugerido: string;
-}
+import { Direcionais } from '@/types';
 
 interface TaskModalProps {
   isOpen: boolean;

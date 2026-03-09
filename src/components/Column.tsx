@@ -3,27 +3,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Card } from './Card';
-
-interface Direcionais {
-  objetivo: string;
-  contexto: string;
-  passos: string[];
-  entregaveis: string[];
-  metricas_sucesso: string[];
-  dependencias: string[];
-  responsavel: string;
-  prazo_sugerido: string;
-}
-
-interface CardData {
-  id: string;
-  title: string;
-  frente: string;
-  priority: 'high' | 'medium' | 'low';
-  description?: string;
-  challengeId: string;
-  direcionais?: Direcionais;
-}
+import { CardData } from '@/types';
 
 interface ColumnProps {
   id: string;
