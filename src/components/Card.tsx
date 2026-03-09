@@ -3,6 +3,17 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
+interface Direcionais {
+  objetivo: string;
+  contexto: string;
+  passos: string[];
+  entregaveis: string[];
+  metricas_sucesso: string[];
+  dependencias: string[];
+  responsavel: string;
+  prazo_sugerido: string;
+}
+
 interface CardProps {
   id: string;
   title: string;
@@ -10,6 +21,8 @@ interface CardProps {
   priority: 'high' | 'medium' | 'low';
   description?: string;
   challengeEmoji: string;
+  direcionais?: Direcionais;
+  onOpenModal?: () => void;
 }
 
 const frenteColors: Record<string, string> = {
@@ -20,7 +33,7 @@ const frenteColors: Record<string, string> = {
   Ops: '#6b7280',
 };
 
-export function Card({ id, title, frente, priority, challengeEmoji }: CardProps) {
+export function Card({ id, title, frente, priority, challengeEmoji, direcionais, onOpenModal }: CardProps) {
   const {
     attributes,
     listeners,
@@ -37,37 +50,36 @@ export function Card({ id, title, frente, priority, challengeEmoji }: CardProps)
 
   const frenteColor = frenteColors[frente] || '#6b7280';
 
+  const handleClick = (e: React.MouseEvent) => {
+    // Only open modal on click, not drag
+    if (!isDragging && onOpenModal) {
+      onOpenModal();
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
+      onClick={handleClick}
       className={`
-        bg-[#111] rounded-lg p-3 cursor-grab active:cursor-grabbing
+        bg-[#111] rounded-lg p-3 cursor-pointer
         border border-[#1f1f1f] hover:border-[#333] transition-all duration-150
         group
-        ${isDragging ? 'opacity-50 shadow-xl scale-[1.02]' : ''}
+        ${isDragging ? 'opacity-50 shadow-xl scale-[1.02] cursor-grabbing' : ''}
       `}
     >
       {/* Title row */}
       <div className="flex items-start gap-2">
         <span className="text-[#555] text-sm">☰</span>
         <h4 className="text-sm text-white leading-tight flex-1">{title}</h4>
-        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button className="text-[#555] hover:text-white p-0.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-            </svg>
-          </button>
-          <button className="text-[#555] hover:text-red-400 p-0.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 6h18" />
-              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-            </svg>
-          </button>
-        </div>
+        {direcionais && (
+          <span className="text-[#00ff00] text-xs opacity-60 group-hover:opacity-100 transition-opacity">
+            📋
+          </span>
+        )}
       </div>
 
       {/* Tags row */}

@@ -15,7 +15,19 @@ import {
 import { arrayMove } from '@dnd-kit/sortable';
 import { Column } from './Column';
 import { Card } from './Card';
+import { TaskModal } from './TaskModal';
 import data from '@/data/challenges.json';
+
+interface Direcionais {
+  objetivo: string;
+  contexto: string;
+  passos: string[];
+  entregaveis: string[];
+  metricas_sucesso: string[];
+  dependencias: string[];
+  responsavel: string;
+  prazo_sugerido: string;
+}
 
 interface CardData {
   id: string;
@@ -25,16 +37,18 @@ interface CardData {
   frente: string;
   priority: 'high' | 'medium' | 'low';
   description?: string;
+  direcionais?: Direcionais;
 }
 
 export function Board() {
   const [cards, setCards] = useState<CardData[]>(data.cards as CardData[]);
   const [activeCard, setActiveCard] = useState<CardData | null>(null);
   const [selectedChallenge, setSelectedChallenge] = useState<string>('all');
+  const [selectedTask, setSelectedTask] = useState<CardData | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
-      activationConstraint: { distance: 5 },
+      activationConstraint: { distance: 10 },
     })
   );
 
@@ -187,6 +201,7 @@ export function Board() {
                 color={column.color}
                 cards={getColumnCards(column.id)}
                 challenges={challenges}
+                onOpenTask={(card) => setSelectedTask(card)}
               />
             ))}
           </div>
@@ -200,11 +215,23 @@ export function Board() {
                 priority={activeCard.priority}
                 description={activeCard.description}
                 challengeEmoji={challenges[activeCard.challengeId]?.emoji || '📋'}
+                direcionais={activeCard.direcionais}
               />
             )}
           </DragOverlay>
         </DndContext>
       </div>
+
+      {/* Task Modal */}
+      <TaskModal
+        isOpen={!!selectedTask}
+        onClose={() => setSelectedTask(null)}
+        title={selectedTask?.title || ''}
+        frente={selectedTask?.frente || ''}
+        priority={selectedTask?.priority || 'medium'}
+        challengeEmoji={selectedTask ? challenges[selectedTask.challengeId]?.emoji || '📋' : '📋'}
+        direcionais={selectedTask?.direcionais}
+      />
     </div>
   );
 }

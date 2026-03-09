@@ -28,7 +28,34 @@
       "title": "Implementar matriz RFM na base Shopify",
       "frente": "Intel",
       "priority": "high",
-      "description": "Processar dados históricos usando metodologias RFM"
+      "description": "Processar dados históricos usando metodologias RFM",
+      "direcionais": {
+        "objetivo": "Segmentar a base de 45k clientes da Shopify usando a metodologia RFM (Recência, Frequência, Valor) para identificar clusters de comportamento e priorizar ações de marketing.",
+        "contexto": "A matriz RFM é a base de toda a estratégia de CRM. Sem ela, não conseguimos personalizar jornadas nem priorizar investimentos. É o primeiro passo crítico.",
+        "passos": [
+          "Exportar base completa de clientes da Shopify (já temos 107k customers, 61k orders)",
+          "Calcular Recência: dias desde a última compra de cada cliente",
+          "Calcular Frequência: número total de pedidos por cliente",
+          "Calcular Valor: ticket médio ou valor total gasto por cliente",
+          "Definir scores de 1-5 para cada dimensão (quintis)",
+          "Criar segmentos padrão: Campeões (555), Em Risco (155), Hibernando (111), etc.",
+          "Gerar tabela final com cliente + segmento RFM"
+        ],
+        "entregaveis": [
+          "Script de cálculo RFM automatizado",
+          "Tabela de clientes com scores R, F, M e segmento final",
+          "Dashboard com distribuição dos segmentos",
+          "Documentação da metodologia aplicada"
+        ],
+        "metricas_sucesso": [
+          "100% da base classificada",
+          "Mínimo 5 segmentos distintos identificados",
+          "Segmento 'Campeões' representando 5-15% da base"
+        ],
+        "dependencias": ["Acesso à API Shopify (já configurado)", "Schema do Hopper atualizado"],
+        "responsavel": "Skar-Intel",
+        "prazo_sugerido": "3 dias"
+      }
     },
     {
       "id": "2",
@@ -37,7 +64,33 @@
       "title": "Calcular LTV por cluster de clientes",
       "frente": "Intel",
       "priority": "high",
-      "description": "Lifetime Value por segmento para priorizar jornadas"
+      "description": "Lifetime Value por segmento para priorizar jornadas",
+      "direcionais": {
+        "objetivo": "Calcular o Lifetime Value (LTV) de cada cliente e agregar por segmento RFM para entender quanto cada grupo vale e quanto podemos investir para retê-los ou adquiri-los.",
+        "contexto": "O LTV é a métrica que define quanto podemos gastar em aquisição (CAC). Sem ele, estamos no escuro sobre ROI de campanhas. Clientes Campeões podem ter LTV 10x maior que Hibernando.",
+        "passos": [
+          "Definir período de análise (sugestão: últimos 24 meses)",
+          "Calcular receita total por cliente no período",
+          "Calcular margem de contribuição (receita - custos variáveis)",
+          "Projetar LTV futuro usando taxa de retenção por segmento",
+          "Agregar LTV médio por segmento RFM",
+          "Calcular relação LTV/CAC atual (se tivermos CAC por canal)"
+        ],
+        "entregaveis": [
+          "Coluna LTV na tabela de clientes",
+          "Tabela resumo: Segmento RFM → LTV médio → % da base → Receita total",
+          "Gráfico de Pareto: quais segmentos geram 80% da receita",
+          "Recomendação de CAC máximo por segmento"
+        ],
+        "metricas_sucesso": [
+          "LTV calculado para 100% dos clientes com compra",
+          "Identificar segmentos com LTV > R$500",
+          "Relação LTV/CAC > 3x para segmentos prioritários"
+        ],
+        "dependencias": ["Matriz RFM implementada (Task #1)", "Dados de margem por produto (verificar com financeiro)"],
+        "responsavel": "Skar-Intel",
+        "prazo_sugerido": "2 dias"
+      }
     },
     {
       "id": "3",
@@ -46,7 +99,33 @@
       "title": "Definir jornadas por segmento",
       "frente": "Intel",
       "priority": "medium",
-      "description": "Campeão, Em Risco, Hibernando, etc."
+      "description": "Campeão, Em Risco, Hibernando, etc.",
+      "direcionais": {
+        "objetivo": "Criar playbooks de comunicação e ação específicos para cada segmento RFM, definindo canais, frequência, tom e ofertas personalizadas.",
+        "contexto": "Cada segmento responde de forma diferente. Campeões querem exclusividade e antecipação. Em Risco precisam de resgate emocional. Hibernando precisam de reativação agressiva. Uma mensagem única para todos é desperdício.",
+        "passos": [
+          "Mapear os 5-8 principais segmentos RFM da base",
+          "Para cada segmento, definir: objetivo da jornada, tom de voz, canais prioritários",
+          "Criar sequência de touchpoints (ex: Campeão = acesso antecipado D-7, lembrete D-3, last call D-1)",
+          "Definir ofertas/incentivos por segmento (desconto, frete grátis, brinde exclusivo)",
+          "Documentar réguas de comunicação em timeline visual",
+          "Validar com time de marketing antes de implementar"
+        ],
+        "entregaveis": [
+          "Documento de Jornadas por Segmento (1 página por segmento)",
+          "Timeline visual de touchpoints por segmento",
+          "Tabela de ofertas/incentivos aprovados",
+          "Briefing para criação de copies por segmento"
+        ],
+        "metricas_sucesso": [
+          "100% dos segmentos com jornada definida",
+          "Mínimo 3 touchpoints por jornada",
+          "Aprovação do time de marketing"
+        ],
+        "dependencias": ["RFM implementado (Task #1)", "LTV calculado (Task #2)"],
+        "responsavel": "Skar-Intel + Marketing",
+        "prazo_sugerido": "3 dias"
+      }
     },
     {
       "id": "4",
@@ -55,7 +134,35 @@
       "title": "Estruturar campanhas Meta Ads por cluster",
       "frente": "Neon",
       "priority": "medium",
-      "description": "Campanhas segmentadas com orçamento distribuído"
+      "description": "Campanhas segmentadas com orçamento distribuído",
+      "direcionais": {
+        "objetivo": "Criar estrutura de campanhas no Meta Ads Manager com públicos segmentados por RFM, orçamentos proporcionais ao LTV e criativos específicos por cluster.",
+        "contexto": "Hoje as campanhas são genéricas. Com a segmentação RFM, podemos criar públicos custom no Meta usando emails/telefones e entregar mensagens personalizadas. Isso aumenta ROAS significativamente.",
+        "passos": [
+          "Exportar listas de clientes por segmento RFM (emails + telefones)",
+          "Criar Custom Audiences no Meta para cada segmento",
+          "Criar Lookalike Audiences baseados nos Campeões (1%, 3%, 5%)",
+          "Estruturar campanha com Ad Sets por segmento",
+          "Definir orçamento proporcional ao LTV de cada segmento",
+          "Configurar testes A/B de criativos dentro de cada Ad Set",
+          "Implementar UTMs para tracking por segmento"
+        ],
+        "entregaveis": [
+          "Custom Audiences criados no Meta (mínimo 5 segmentos)",
+          "Lookalike Audiences dos Campeões",
+          "Estrutura de campanha documentada (campanha → ad sets → ads)",
+          "Planilha de distribuição de orçamento",
+          "Nomenclatura padronizada para todas as campanhas"
+        ],
+        "metricas_sucesso": [
+          "Públicos custom com match rate > 50%",
+          "Estrutura aprovada antes do lançamento",
+          "100% das campanhas com UTMs configurados"
+        ],
+        "dependencias": ["Listas de segmentos RFM (Task #1)", "META_ACCESS_TOKEN configurado"],
+        "responsavel": "Skar-Neon",
+        "prazo_sugerido": "2 dias"
+      }
     },
     {
       "id": "5",
@@ -64,7 +171,33 @@
       "title": "Configurar célula controle",
       "frente": "Neon",
       "priority": "medium",
-      "description": "Público sem impacto para validar eficácia"
+      "description": "Público sem impacto para validar eficácia",
+      "direcionais": {
+        "objetivo": "Reservar uma parcela estatisticamente significativa da base que NÃO receberá nenhuma comunicação do drop, para medir o impacto real das campanhas vs. demanda orgânica.",
+        "contexto": "Sem célula controle, não sabemos se as vendas vieram por causa das campanhas ou se aconteceriam de qualquer forma. É a única forma de provar ROI real e justificar investimentos futuros.",
+        "passos": [
+          "Definir tamanho da célula controle (sugestão: 10% da base por segmento)",
+          "Usar randomização estratificada para garantir representatividade",
+          "Marcar clientes da célula controle no CRM/banco de dados",
+          "Excluir esses clientes de TODAS as listas de disparo (email, WhatsApp, ads)",
+          "Criar Custom Audience de exclusão no Meta",
+          "Documentar metodologia para análise pós-campanha"
+        ],
+        "entregaveis": [
+          "Lista de clientes na célula controle (IDs marcados)",
+          "Custom Audience de exclusão no Meta",
+          "Lista de exclusão para email marketing",
+          "Documento de metodologia do experimento"
+        ],
+        "metricas_sucesso": [
+          "Célula controle com mínimo 5% da base total",
+          "Distribuição proporcional de segmentos RFM na célula",
+          "Zero vazamentos (controle não pode receber impactos)"
+        ],
+        "dependencias": ["Segmentação RFM finalizada (Task #1)"],
+        "responsavel": "Skar-Neon + Skar-Intel",
+        "prazo_sugerido": "1 dia"
+      }
     },
     {
       "id": "6",
@@ -73,7 +206,33 @@
       "title": "Setup testes A/B automatizados",
       "frente": "Neon",
       "priority": "low",
-      "description": "Testes de canais, estratégias e horários"
+      "description": "Testes de canais, estratégias e horários",
+      "direcionais": {
+        "objetivo": "Configurar infraestrutura de testes A/B contínuos para otimizar criativos, copies, horários de envio e canais de forma automatizada.",
+        "contexto": "O mercado muda rápido. O que funciona hoje pode não funcionar amanhã. Testes A/B contínuos garantem que estamos sempre otimizando e aprendendo.",
+        "passos": [
+          "Definir variáveis a testar: criativos, headlines, CTAs, horários, canais",
+          "Configurar split tests no Meta Ads (A/B nativo)",
+          "Configurar testes de subject line no email marketing",
+          "Definir tamanho mínimo de amostra para significância estatística",
+          "Criar dashboard de resultados de testes",
+          "Definir processo de escalar vencedores e matar perdedores"
+        ],
+        "entregaveis": [
+          "Playbook de testes A/B (o que testar, como testar, quando decidir)",
+          "Dashboard de experimentos ativos e resultados",
+          "Processo documentado de escala de vencedores",
+          "Calendário de testes para as primeiras 2 semanas"
+        ],
+        "metricas_sucesso": [
+          "Mínimo 3 testes rodando simultaneamente",
+          "Decisões baseadas em significância estatística (p < 0.05)",
+          "Ciclo de teste-aprende de no máximo 7 dias"
+        ],
+        "dependencias": ["Estrutura de campanhas criada (Task #4)"],
+        "responsavel": "Skar-Neon",
+        "prazo_sugerido": "2 dias"
+      }
     },
     {
       "id": "7",
@@ -82,7 +241,34 @@
       "title": "Pipeline de criativos por persona",
       "frente": "Design",
       "priority": "medium",
-      "description": "Variações de criativos estáticos e vídeo"
+      "description": "Variações de criativos estáticos e vídeo",
+      "direcionais": {
+        "objetivo": "Criar biblioteca de criativos (estáticos + vídeos) personalizados para cada segmento/persona, garantindo que a mensagem visual ressoe com cada público.",
+        "contexto": "Um fã de eSports quer ver a Jersey em jogo. Um fã do Coringa quer ver ele usando. Criativos genéricos têm CTR baixo. Personalização aumenta performance 2-3x.",
+        "passos": [
+          "Mapear personas principais (por jogo, por influenciador, por interesse)",
+          "Definir diretrizes visuais por persona (cores, estilo, elementos)",
+          "Criar templates base para estáticos (feed, stories, carrossel)",
+          "Criar roteiros de vídeo curto (6s, 15s, 30s) por persona",
+          "Produzir batch inicial de criativos (mínimo 5 variações por persona)",
+          "Organizar biblioteca de assets com nomenclatura padronizada"
+        ],
+        "entregaveis": [
+          "Documento de personas com diretrizes visuais",
+          "Templates editáveis (Figma/Canva) para cada formato",
+          "Biblioteca de criativos organizados por persona/formato",
+          "Roteiros de vídeo aprovados",
+          "Batch inicial de 20+ criativos prontos para subir"
+        ],
+        "metricas_sucesso": [
+          "Mínimo 3 variações de criativo por segmento prioritário",
+          "Criativos aprovados pelo time de marketing",
+          "Assets organizados e acessíveis para a equipe"
+        ],
+        "dependencias": ["Jornadas por segmento definidas (Task #3)", "Briefing de copies por segmento"],
+        "responsavel": "Skar-Design",
+        "prazo_sugerido": "5 dias"
+      }
     },
     {
       "id": "8",
@@ -91,7 +277,33 @@
       "title": "LPs dinâmicas Shopify",
       "frente": "Site",
       "priority": "low",
-      "description": "Páginas que alteram conforme origem"
+      "description": "Páginas que alteram conforme origem",
+      "direcionais": {
+        "objetivo": "Criar landing pages na Shopify que se adaptam dinamicamente baseado na origem do tráfego, segmento do cliente ou UTM, mostrando banners, produtos e mensagens personalizadas.",
+        "contexto": "Uma LP genérica converte menos. Se o cliente veio de um anúncio do Fallen, ele deve ver o Fallen na LP. Se é um cliente Campeão, deve ver mensagem de exclusividade. Personalização aumenta conversão 20-40%.",
+        "passos": [
+          "Auditar capacidades de personalização da Shopify atual",
+          "Definir regras de personalização (por UTM, por cookie, por query param)",
+          "Criar variações de hero banner por persona/campanha",
+          "Implementar lógica de exibição dinâmica (Liquid ou app)",
+          "Configurar tracking de qual variação converte melhor",
+          "Testar em ambiente de staging antes de publicar"
+        ],
+        "entregaveis": [
+          "LP principal com personalização dinâmica implementada",
+          "Variações de banner/hero para cada persona",
+          "Documentação técnica da implementação",
+          "Dashboard de conversão por variação"
+        ],
+        "metricas_sucesso": [
+          "LP carregando < 3 segundos",
+          "Personalização funcionando para todas as UTMs principais",
+          "Taxa de conversão da LP > média histórica"
+        ],
+        "dependencias": ["Criativos de banner prontos (Task #7)", "UTMs definidos nas campanhas (Task #4)"],
+        "responsavel": "Skar-Site",
+        "prazo_sugerido": "4 dias"
+      }
     },
     {
       "id": "9",
@@ -100,7 +312,33 @@
       "title": "Template Status Report semanal",
       "frente": "Ops",
       "priority": "low",
-      "description": "Relatório com execução, resultados, erros"
+      "description": "Relatório com execução, resultados, erros",
+      "direcionais": {
+        "objetivo": "Criar template e processo para relatório semanal automático que consolide todas as métricas das campanhas, aprendizados e ajustes propostos.",
+        "contexto": "A cada semana, a Skar precisa reportar o que executou, o que deu certo, o que deu errado e o que vai mudar. Isso garante transparência, aprendizado contínuo e alinhamento com stakeholders.",
+        "passos": [
+          "Definir estrutura do relatório (seções, métricas, formato)",
+          "Identificar fontes de dados para cada métrica (Meta, Shopify, Email, etc.)",
+          "Criar template visual no formato preferido (Notion, Slides, PDF)",
+          "Automatizar coleta de dados onde possível",
+          "Definir processo de preenchimento e revisão",
+          "Estabelecer dia/hora de envio (sugestão: toda segunda às 10h)"
+        ],
+        "entregaveis": [
+          "Template de Status Report aprovado",
+          "Processo documentado de geração do relatório",
+          "Scripts de coleta automatizada de métricas",
+          "Primeiro relatório exemplo preenchido"
+        ],
+        "metricas_sucesso": [
+          "Relatório gerado em menos de 1 hora",
+          "100% das métricas-chave incluídas",
+          "Stakeholders satisfeitos com nível de detalhe"
+        ],
+        "dependencias": ["Campanhas rodando para ter dados"],
+        "responsavel": "Skar-Ops",
+        "prazo_sugerido": "2 dias"
+      }
     },
     {
       "id": "10",
@@ -109,7 +347,34 @@
       "title": "Análise: padrão Seguidor→Cliente",
       "frente": "Intel",
       "priority": "high",
-      "description": "Identificar comportamento dos 45k Louders"
+      "description": "Identificar comportamento dos 45k Louders",
+      "direcionais": {
+        "objetivo": "Analisar os 45k clientes atuais (Louders) para identificar padrões de comportamento que precederam a primeira compra — de onde vieram, quanto tempo levaram, o que compraram primeiro.",
+        "contexto": "Temos 30M de seguidores mas só 45k compraram. Entender o caminho dos que converteram nos ajuda a replicar esse caminho para os outros 29.955.000. É engenharia reversa de conversão.",
+        "passos": [
+          "Cruzar base de clientes Shopify com dados de origem (UTM, referrer)",
+          "Calcular time-to-first-purchase: dias entre primeiro contato e primeira compra",
+          "Identificar produto de entrada mais comum (gateway product)",
+          "Mapear jornada típica: seguiu → engajou → cadastrou → comprou",
+          "Segmentar por canal de origem (orgânico, paid, influencer, etc.)",
+          "Identificar correlações: quem segue X tem Y% mais chance de comprar"
+        ],
+        "entregaveis": [
+          "Relatório de análise de conversão (PDF/Notion)",
+          "Perfil do 'Lead Ideal' baseado em dados",
+          "Funil de conversão quantificado por etapa",
+          "Lista de triggers que precedem compra",
+          "Recomendações para estratégia de captação"
+        ],
+        "metricas_sucesso": [
+          "Análise cobrindo 80%+ dos clientes com dados de origem",
+          "Time-to-first-purchase calculado",
+          "Mínimo 5 insights acionáveis identificados"
+        ],
+        "dependencias": ["Dados de Shopify (já temos)", "Dados de redes sociais se disponíveis"],
+        "responsavel": "Skar-Intel",
+        "prazo_sugerido": "4 dias"
+      }
     },
     {
       "id": "11",
@@ -118,7 +383,33 @@
       "title": "Definir critérios de Lead de Alto Valor",
       "frente": "Intel",
       "priority": "high",
-      "description": "Perfil ideal baseado em LTV"
+      "description": "Perfil ideal baseado em LTV",
+      "direcionais": {
+        "objetivo": "Criar scoring model para qualificar leads no momento da captação, priorizando aqueles com maior probabilidade de se tornarem clientes de alto LTV.",
+        "contexto": "Nem todo lead é igual. Um lead com perfil similar aos Campeões vale 10x mais que um lead aleatório. Precisamos saber quem priorizar antes mesmo da primeira compra.",
+        "passos": [
+          "Analisar características dos clientes de alto LTV (idade, região, interesses, canal)",
+          "Identificar 5-10 variáveis preditivas de alto valor",
+          "Criar modelo de scoring simples (pontuação 0-100)",
+          "Definir thresholds: Lead Quente (>70), Morno (40-70), Frio (<40)",
+          "Testar modelo contra base histórica (backtesting)",
+          "Documentar critérios para uso em formulários e ads"
+        ],
+        "entregaveis": [
+          "Documento de critérios de Lead de Alto Valor",
+          "Modelo de scoring com variáveis e pesos",
+          "Tabela de thresholds e ações por faixa",
+          "Validação do modelo com dados históricos"
+        ],
+        "metricas_sucesso": [
+          "Modelo com precisão > 70% em backtesting",
+          "Critérios claros e aplicáveis em formulários",
+          "Aprovação do time de marketing"
+        ],
+        "dependencias": ["Análise Seguidor→Cliente (Task #10)", "LTV calculado (Task #2)"],
+        "responsavel": "Skar-Intel",
+        "prazo_sugerido": "3 dias"
+      }
     },
     {
       "id": "12",
@@ -127,7 +418,33 @@
       "title": "Brainstorm iscas digitais",
       "frente": "Intel",
       "priority": "medium",
-      "description": "Lead Magnets usando ecossistema LOUD"
+      "description": "Lead Magnets usando ecossistema LOUD",
+      "direcionais": {
+        "objetivo": "Criar lista de 10-20 ideias de iscas digitais (Lead Magnets) que façam sentido para o público LOUD e incentivem o cadastro com dados de contato.",
+        "contexto": "Ninguém dá email/telefone de graça. Precisamos oferecer algo de valor em troca. A LOUD tem um ecossistema rico: influenciadores, bastidores, eventos, produtos exclusivos. Vamos usar isso.",
+        "passos": [
+          "Listar todos os assets da LOUD que podem virar isca (conteúdo, acesso, produtos)",
+          "Pesquisar iscas que funcionam em gaming/lifestyle (benchmarks)",
+          "Brainstorm com time: o que o fã LOUD daria o email para ter?",
+          "Priorizar por: facilidade de criar, apelo para o público, custo",
+          "Selecionar top 5 para testar",
+          "Criar briefing de cada isca para produção"
+        ],
+        "entregaveis": [
+          "Lista de 20 ideias de iscas com descrição curta",
+          "Matriz de priorização (impacto x esforço)",
+          "Top 5 iscas selecionadas para teste",
+          "Briefing de produção para cada isca selecionada"
+        ],
+        "metricas_sucesso": [
+          "Mínimo 20 ideias geradas",
+          "5 iscas aprovadas para produção",
+          "Briefings claros e completos"
+        ],
+        "dependencias": ["Entendimento do perfil do Lead Ideal (Task #11)"],
+        "responsavel": "Skar-Intel + Marketing",
+        "prazo_sugerido": "2 dias"
+      }
     },
     {
       "id": "13",
@@ -136,7 +453,33 @@
       "title": "Setup campanhas Lead Gen",
       "frente": "Neon",
       "priority": "medium",
-      "description": "Meta Lead Gen + Google Search"
+      "description": "Meta Lead Gen + Google Search",
+      "direcionais": {
+        "objetivo": "Configurar campanhas de geração de leads no Meta Ads e Google Ads com formulários nativos, tracking adequado e integração com CRM.",
+        "contexto": "Campanhas de Lead Gen têm custo por lead menor que mandar para LP + formulário. O formulário nativo do Meta/Google já vem preenchido com dados do usuário. Menos fricção = mais leads.",
+        "passos": [
+          "Criar formulários de Lead Gen no Meta (Instant Forms)",
+          "Configurar campos obrigatórios (nome, email, telefone) + campos de qualificação",
+          "Integrar formulários com CRM/Hopper via Zapier ou API",
+          "Criar campanhas de Lead Gen no Google (Search + Display)",
+          "Configurar conversões e tracking em ambas plataformas",
+          "Definir orçamento inicial e estratégia de bid"
+        ],
+        "entregaveis": [
+          "Campanhas de Lead Gen ativas no Meta",
+          "Campanhas de Lead Gen ativas no Google",
+          "Integração funcionando: lead entra no CRM em tempo real",
+          "Dashboard de custo por lead por canal"
+        ],
+        "metricas_sucesso": [
+          "CPL (Custo por Lead) < R$5 no Meta",
+          "Taxa de preenchimento do formulário > 50%",
+          "100% dos leads chegando no CRM em < 5 minutos"
+        ],
+        "dependencias": ["Iscas definidas (Task #12)", "CRM/Hopper pronto para receber leads"],
+        "responsavel": "Skar-Neon",
+        "prazo_sugerido": "3 dias"
+      }
     },
     {
       "id": "14",
@@ -145,7 +488,33 @@
       "title": "Criativos de captação",
       "frente": "Design",
       "priority": "medium",
-      "description": "Benefícios exclusivos, sorteios, gamificação"
+      "description": "Benefícios exclusivos, sorteios, gamificação",
+      "direcionais": {
+        "objetivo": "Produzir criativos específicos para campanhas de captação de leads, focando em comunicar o benefício da isca de forma clara e atraente.",
+        "contexto": "Criativo de captação é diferente de criativo de venda. Aqui o objetivo é gerar curiosidade e mostrar o valor do que estamos oferecendo em troca do cadastro. Menos 'compre', mais 'descubra/acesse/participe'.",
+        "passos": [
+          "Receber briefing das iscas selecionadas (Task #12)",
+          "Definir conceito visual para cada isca",
+          "Criar variações de criativos (estático + vídeo) para cada isca",
+          "Incluir copy focada no benefício, não no produto",
+          "Produzir versões para diferentes formatos (feed, stories, reels)",
+          "Organizar assets e entregar para time de mídia"
+        ],
+        "entregaveis": [
+          "Pack de criativos por isca (mínimo 3 variações cada)",
+          "Versões em todos os formatos necessários",
+          "Copies aprovadas incluídas nos criativos",
+          "Assets organizados e nomeados corretamente"
+        ],
+        "metricas_sucesso": [
+          "Mínimo 15 criativos prontos para teste",
+          "Aprovação do time de marketing",
+          "Criativos entregues antes do lançamento das campanhas"
+        ],
+        "dependencias": ["Iscas selecionadas (Task #12)", "Briefing de copies"],
+        "responsavel": "Skar-Design",
+        "prazo_sugerido": "4 dias"
+      }
     },
     {
       "id": "15",
@@ -154,7 +523,34 @@
       "title": "Formulários/LPs de captura",
       "frente": "Site",
       "priority": "low",
-      "description": "Testar formulários curtos vs gamificados"
+      "description": "Testar formulários curtos vs gamificados",
+      "direcionais": {
+        "objetivo": "Criar e testar diferentes formatos de captura de leads: formulários simples, quizzes interativos, experiências gamificadas — para descobrir o que converte melhor.",
+        "contexto": "Formulário curto é rápido mas pode ter leads de baixa qualidade. Quiz é mais engajante e qualifica melhor, mas tem mais abandono. Precisamos testar para descobrir o sweet spot.",
+        "passos": [
+          "Criar LP com formulário simples (3 campos: nome, email, telefone)",
+          "Criar LP com quiz interativo (5-7 perguntas + captura no final)",
+          "Criar experiência gamificada simples (roleta, raspadinha digital)",
+          "Implementar tracking de cada etapa (page view, inicio form, submit)",
+          "Configurar A/B test entre formatos",
+          "Analisar resultados: volume vs qualidade dos leads"
+        ],
+        "entregaveis": [
+          "LP de formulário simples publicada",
+          "LP de quiz publicada",
+          "Experiência gamificada publicada",
+          "Dashboard comparativo de performance",
+          "Relatório de qual formato venceu"
+        ],
+        "metricas_sucesso": [
+          "3 formatos testados com tráfego significativo",
+          "Identificar formato com melhor relação volume x qualidade",
+          "Taxa de conversão > 20% no formato vencedor"
+        ],
+        "dependencias": ["Iscas definidas (Task #12)", "Criativos prontos (Task #14)"],
+        "responsavel": "Skar-Site",
+        "prazo_sugerido": "5 dias"
+      }
     },
     {
       "id": "16",
@@ -163,7 +559,33 @@
       "title": "Template Status Report diário",
       "frente": "Ops",
       "priority": "low",
-      "description": "Performance da isca, qualidade do lead"
+      "description": "Performance da isca, qualidade do lead",
+      "direcionais": {
+        "objetivo": "Criar template e processo para relatório diário de captação que mostre volume de leads, custo, qualidade e performance de cada isca/canal.",
+        "contexto": "Captação de leads precisa de monitoramento diário porque o CPL pode variar muito. Se uma isca parar de funcionar, precisamos saber rápido para pausar e realocar budget.",
+        "passos": [
+          "Definir métricas do relatório diário (leads, CPL, taxa conversão, qualidade)",
+          "Identificar fontes de dados (Meta, Google, CRM)",
+          "Criar template enxuto (1 página, foco em números-chave)",
+          "Automatizar coleta de dados onde possível",
+          "Definir alertas para anomalias (CPL > X, volume < Y)",
+          "Estabelecer horário de envio (sugestão: todo dia às 9h)"
+        ],
+        "entregaveis": [
+          "Template de Status Report diário aprovado",
+          "Processo de geração automatizado",
+          "Sistema de alertas configurado",
+          "Primeiro relatório exemplo"
+        ],
+        "metricas_sucesso": [
+          "Relatório gerado automaticamente em < 15 min",
+          "Alertas funcionando para métricas críticas",
+          "Time recebendo relatório todo dia no horário"
+        ],
+        "dependencias": ["Campanhas de Lead Gen rodando (Task #13)"],
+        "responsavel": "Skar-Ops",
+        "prazo_sugerido": "2 dias"
+      }
     }
   ]
 }

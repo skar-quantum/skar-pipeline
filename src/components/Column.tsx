@@ -4,6 +4,17 @@ import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Card } from './Card';
 
+interface Direcionais {
+  objetivo: string;
+  contexto: string;
+  passos: string[];
+  entregaveis: string[];
+  metricas_sucesso: string[];
+  dependencias: string[];
+  responsavel: string;
+  prazo_sugerido: string;
+}
+
 interface CardData {
   id: string;
   title: string;
@@ -11,6 +22,7 @@ interface CardData {
   priority: 'high' | 'medium' | 'low';
   description?: string;
   challengeId: string;
+  direcionais?: Direcionais;
 }
 
 interface ColumnProps {
@@ -19,17 +31,16 @@ interface ColumnProps {
   color: string;
   cards: CardData[];
   challenges: Record<string, { color: string; emoji: string }>;
+  onOpenTask: (card: CardData) => void;
 }
 
 const columnColors: Record<string, string> = {
   backlog: '#888888',
-  analise: '#f59e0b',
-  execucao: '#3b82f6',
-  review: '#8b5cf6',
+  execucao: '#f59e0b',
   done: '#00ff00',
 };
 
-export function Column({ id, name, color, cards, challenges }: ColumnProps) {
+export function Column({ id, name, color, cards, challenges, onOpenTask }: ColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id });
   const dotColor = columnColors[id] || color;
 
@@ -72,6 +83,8 @@ export function Column({ id, name, color, cards, challenges }: ColumnProps) {
               priority={card.priority}
               description={card.description}
               challengeEmoji={challenges[card.challengeId]?.emoji || '📋'}
+              direcionais={card.direcionais}
+              onOpenModal={() => onOpenTask(card)}
             />
           ))}
         </SortableContext>
