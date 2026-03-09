@@ -1,0 +1,171 @@
+{
+  "challenges": [
+    {
+      "id": "jersey-2026",
+      "name": "Drop Jersey 2026",
+      "emoji": "🎽",
+      "goal": "2.5k Jerseys + 2k novos compradores em 60 dias",
+      "color": "#8B5CF6"
+    },
+    {
+      "id": "captacao-leads",
+      "name": "Captação de Leads",
+      "emoji": "📥",
+      "goal": "Converter 30M seguidores em First-Party Data",
+      "color": "#06B6D4"
+    }
+  ],
+  "columns": [
+    { "id": "backlog", "name": "Backlog", "color": "#6B7280" },
+    { "id": "analise", "name": "Em Análise", "color": "#F59E0B" },
+    { "id": "execucao", "name": "Em Execução", "color": "#3B82F6" },
+    { "id": "review", "name": "Review", "color": "#8B5CF6" },
+    { "id": "done", "name": "Done", "color": "#10B981" }
+  ],
+  "cards": [
+    {
+      "id": "1",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "Implementar matriz RFM na base Shopify",
+      "frente": "Intel",
+      "priority": "high",
+      "description": "Processar dados históricos usando metodologias RFM (Recência, Frequência e Valor)"
+    },
+    {
+      "id": "2",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "Calcular LTV por cluster de clientes",
+      "frente": "Intel",
+      "priority": "high",
+      "description": "Lifetime Value por segmento para priorizar jornadas"
+    },
+    {
+      "id": "3",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "Definir jornadas por segmento",
+      "frente": "Intel",
+      "priority": "high",
+      "description": "Campeão, Em Risco, Hibernando, etc. com estratégias distintas"
+    },
+    {
+      "id": "4",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "Estruturar campanhas Meta Ads por cluster",
+      "frente": "Neon",
+      "priority": "medium",
+      "description": "Campanhas segmentadas com orçamento distribuído por público"
+    },
+    {
+      "id": "5",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "Configurar célula controle",
+      "frente": "Neon",
+      "priority": "medium",
+      "description": "Público sem impacto para validar eficácia da estratégia"
+    },
+    {
+      "id": "6",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "Setup testes A/B automatizados",
+      "frente": "Neon",
+      "priority": "medium",
+      "description": "Testes de canais, estratégias e horários"
+    },
+    {
+      "id": "7",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "Pipeline de criativos por persona",
+      "frente": "Design",
+      "priority": "medium",
+      "description": "Variações de criativos estáticos e vídeo por cluster"
+    },
+    {
+      "id": "8",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "LPs dinâmicas Shopify",
+      "frente": "Site",
+      "priority": "low",
+      "description": "Páginas que alteram banners/fotos conforme origem ou ID do cliente"
+    },
+    {
+      "id": "9",
+      "challengeId": "jersey-2026",
+      "columnId": "backlog",
+      "title": "Template Status Report semanal",
+      "frente": "Ops",
+      "priority": "low",
+      "description": "Relatório com execução, resultados, erros e ajustes"
+    },
+    {
+      "id": "10",
+      "challengeId": "captacao-leads",
+      "columnId": "backlog",
+      "title": "Análise: padrão Seguidor→Cliente",
+      "frente": "Intel",
+      "priority": "high",
+      "description": "Identificar comportamento dos 45k Louders que converteram"
+    },
+    {
+      "id": "11",
+      "challengeId": "captacao-leads",
+      "columnId": "backlog",
+      "title": "Definir critérios de Lead de Alto Valor",
+      "frente": "Intel",
+      "priority": "high",
+      "description": "Perfil ideal baseado em LTV dos clientes atuais"
+    },
+    {
+      "id": "12",
+      "challengeId": "captacao-leads",
+      "columnId": "backlog",
+      "title": "Brainstorm iscas digitais",
+      "frente": "Intel",
+      "priority": "medium",
+      "description": "Lead Magnets usando ecossistema LOUD de assets"
+    },
+    {
+      "id": "13",
+      "challengeId": "captacao-leads",
+      "columnId": "backlog",
+      "title": "Setup campanhas Lead Gen",
+      "frente": "Neon",
+      "priority": "medium",
+      "description": "Meta Lead Gen + Google Search com testes automatizados"
+    },
+    {
+      "id": "14",
+      "challengeId": "captacao-leads",
+      "columnId": "backlog",
+      "title": "Criativos de captação",
+      "frente": "Design",
+      "priority": "medium",
+      "description": "Benefícios exclusivos, sorteios, acesso a conteúdos, gamificação"
+    },
+    {
+      "id": "15",
+      "challengeId": "captacao-leads",
+      "columnId": "backlog",
+      "title": "Formulários/LPs de captura",
+      "frente": "Site",
+      "priority": "low",
+      "description": "Testar formulários curtos vs experiências gamificadas"
+    },
+    {
+      "id": "16",
+      "challengeId": "captacao-leads",
+      "columnId": "backlog",
+      "title": "Template Status Report diário",
+      "frente": "Ops",
+      "priority": "low",
+      "description": "Performance da isca, qualidade do lead, eficiência criativa"
+    }
+  ]
+}
