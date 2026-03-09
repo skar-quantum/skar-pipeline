@@ -10,7 +10,6 @@ interface ColumnProps {
   name: string;
   color: string;
   cards: CardData[];
-  challenges: Record<string, { color: string; emoji: string }>;
   onOpenTask: (card: CardData) => void;
 }
 
@@ -20,7 +19,7 @@ const columnColors: Record<string, string> = {
   done: '#00ff00',
 };
 
-export function Column({ id, name, color, cards, challenges, onOpenTask }: ColumnProps) {
+export function Column({ id, name, color, cards, onOpenTask }: ColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id });
   const dotColor = columnColors[id] || color;
 
@@ -61,8 +60,6 @@ export function Column({ id, name, color, cards, challenges, onOpenTask }: Colum
               title={card.title}
               frente={card.frente}
               priority={card.priority}
-              description={card.description}
-              challengeEmoji={challenges[card.challengeId]?.emoji || '📋'}
               direcionais={card.direcionais}
               onOpenModal={() => onOpenTask(card)}
             />

@@ -32,7 +32,7 @@ export function Board() {
   );
 
   const challenges = Object.fromEntries(
-    data.challenges.map((c) => [c.id, { color: c.color, name: c.name, emoji: c.emoji }])
+    data.challenges.map((c) => [c.id, { color: c.color, name: c.name }])
   );
 
   const filteredCards = selectedChallenge === 'all' 
@@ -121,8 +121,7 @@ export function Board() {
       <header className="border-b border-[#1f1f1f] px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-white flex items-center gap-2">
-              <span className="text-[#00ff00]">⚡</span>
+            <h1 className="text-xl font-semibold text-white">
               Pipeline
             </h1>
             <p className="text-sm text-[#555] mt-0.5">
@@ -153,14 +152,13 @@ export function Board() {
             <button
               key={challenge.id}
               onClick={() => setSelectedChallenge(challenge.id)}
-              className={`px-3 py-1.5 rounded text-sm transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded text-sm transition-colors ${
                 selectedChallenge === challenge.id
                   ? 'bg-[#00ff00] text-black font-medium'
                   : 'text-[#888] hover:text-white hover:bg-[#1a1a1a]'
               }`}
             >
-              <span>{challenge.emoji}</span>
-              <span>{challenge.name}</span>
+              {challenge.name}
             </button>
           ))}
         </div>
@@ -183,7 +181,6 @@ export function Board() {
                 name={column.name}
                 color={column.color}
                 cards={getColumnCards(column.id)}
-                challenges={challenges}
                 onOpenTask={handleOpenTask}
               />
             ))}
@@ -196,8 +193,6 @@ export function Board() {
                 title={activeCard.title}
                 frente={activeCard.frente}
                 priority={activeCard.priority}
-                description={activeCard.description}
-                challengeEmoji={challenges[activeCard.challengeId]?.emoji || '📋'}
                 direcionais={activeCard.direcionais}
               />
             )}
@@ -212,7 +207,6 @@ export function Board() {
         title={selectedTask?.title || ''}
         frente={selectedTask?.frente || ''}
         priority={selectedTask?.priority || 'medium'}
-        challengeEmoji={selectedTask ? challenges[selectedTask.challengeId]?.emoji || '📋' : '📋'}
         direcionais={selectedTask?.direcionais}
       />
     </div>

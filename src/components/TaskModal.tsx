@@ -9,7 +9,6 @@ interface TaskModalProps {
   title: string;
   frente: string;
   priority: 'high' | 'medium' | 'low';
-  challengeEmoji: string;
   direcionais?: Direcionais;
 }
 
@@ -27,7 +26,6 @@ export function TaskModal({
   title, 
   frente, 
   priority,
-  challengeEmoji,
   direcionais 
 }: TaskModalProps) {
   const frenteColor = frenteColors[frente] || '#6b7280';
@@ -72,7 +70,7 @@ export function TaskModal({
                   color: frenteColor,
                 }}
               >
-                {challengeEmoji} {frente}
+                {frente}
               </span>
               {priority === 'high' && (
                 <span className="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400">
@@ -98,24 +96,24 @@ export function TaskModal({
             <>
               {/* Objetivo */}
               <section>
-                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-2 flex items-center gap-2">
-                  <span>🎯</span> Objetivo
+                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-2">
+                  Objetivo
                 </h3>
                 <p className="text-[#ccc] leading-relaxed">{direcionais.objetivo}</p>
               </section>
 
               {/* Contexto */}
               <section>
-                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-2 flex items-center gap-2">
-                  <span>💡</span> Contexto
+                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-2">
+                  Contexto
                 </h3>
                 <p className="text-[#ccc] leading-relaxed">{direcionais.contexto}</p>
               </section>
 
               {/* Passos */}
               <section>
-                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-3 flex items-center gap-2">
-                  <span>📋</span> Passos para Execução
+                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-3">
+                  Passos para Execução
                 </h3>
                 <ol className="space-y-2">
                   {direcionais.passos.map((passo, i) => (
@@ -131,13 +129,13 @@ export function TaskModal({
 
               {/* Entregáveis */}
               <section>
-                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-3 flex items-center gap-2">
-                  <span>📦</span> Entregáveis
+                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-3">
+                  Entregáveis
                 </h3>
                 <ul className="space-y-2">
                   {direcionais.entregaveis.map((item, i) => (
                     <li key={i} className="flex gap-2 text-[#ccc]">
-                      <span className="text-[#00ff00]">✓</span>
+                      <span className="text-[#00ff00]">-</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -146,13 +144,13 @@ export function TaskModal({
 
               {/* Métricas de Sucesso */}
               <section>
-                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-3 flex items-center gap-2">
-                  <span>📊</span> Métricas de Sucesso
+                <h3 className="text-sm font-semibold text-[#00ff00] uppercase tracking-wide mb-3">
+                  Métricas de Sucesso
                 </h3>
                 <ul className="space-y-2">
                   {direcionais.metricas_sucesso.map((metrica, i) => (
                     <li key={i} className="flex gap-2 text-[#ccc]">
-                      <span className="text-[#f59e0b]">→</span>
+                      <span className="text-[#f59e0b]">-</span>
                       <span>{metrica}</span>
                     </li>
                   ))}

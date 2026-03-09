@@ -9,8 +9,6 @@ interface CardProps {
   title: string;
   frente: string;
   priority: 'high' | 'medium' | 'low';
-  description?: string;
-  challengeEmoji: string;
   direcionais?: Direcionais;
   onOpenModal?: () => void;
 }
@@ -23,7 +21,7 @@ const frenteColors: Record<string, string> = {
   Ops: '#6b7280',
 };
 
-export function Card({ id, title, frente, priority, challengeEmoji, direcionais, onOpenModal }: CardProps) {
+export function Card({ id, title, frente, priority, direcionais, onOpenModal }: CardProps) {
   const {
     attributes,
     listeners,
@@ -62,11 +60,11 @@ export function Card({ id, title, frente, priority, challengeEmoji, direcionais,
     >
       {/* Title row */}
       <div className="flex items-start gap-2">
-        <span className="text-[#555] text-sm">☰</span>
+        <span className="text-[#555] text-sm select-none">::</span>
         <h4 className="text-sm text-white leading-tight flex-1">{title}</h4>
         {direcionais && (
-          <span className="text-[#00ff00] text-xs opacity-60 group-hover:opacity-100 transition-opacity">
-            📋
+          <span className="text-[#00ff00] text-xs opacity-60 group-hover:opacity-100 transition-opacity select-none">
+            +
           </span>
         )}
       </div>
@@ -80,7 +78,7 @@ export function Card({ id, title, frente, priority, challengeEmoji, direcionais,
             color: frenteColor,
           }}
         >
-          {challengeEmoji} {frente}
+          {frente}
         </span>
         {priority === 'high' && (
           <span className="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400">
