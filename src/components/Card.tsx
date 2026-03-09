@@ -9,24 +9,18 @@ interface CardProps {
   frente: string;
   priority: 'high' | 'medium' | 'low';
   description?: string;
-  challengeColor: string;
+  challengeEmoji: string;
 }
 
-const priorityStyles = {
-  high: 'bg-red-500/20 text-red-400 border-red-500/30',
-  medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  low: 'bg-green-500/20 text-green-400 border-green-500/30',
+const frenteColors: Record<string, string> = {
+  Intel: '#a855f7',
+  Neon: '#00ff00',
+  Design: '#3b82f6',
+  Site: '#06b6d4',
+  Ops: '#6b7280',
 };
 
-const frenteStyles: Record<string, string> = {
-  Intel: 'bg-purple-500/20 text-purple-400',
-  Neon: 'bg-pink-500/20 text-pink-400',
-  Design: 'bg-blue-500/20 text-blue-400',
-  Site: 'bg-cyan-500/20 text-cyan-400',
-  Ops: 'bg-gray-500/20 text-gray-400',
-};
-
-export function Card({ id, title, frente, priority, description, challengeColor }: CardProps) {
+export function Card({ id, title, frente, priority, challengeEmoji }: CardProps) {
   const {
     attributes,
     listeners,
@@ -39,8 +33,9 @@ export function Card({ id, title, frente, priority, description, challengeColor 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    borderLeftColor: challengeColor,
   };
+
+  const frenteColor = frenteColors[frente] || '#6b7280';
 
   return (
     <div
@@ -49,25 +44,49 @@ export function Card({ id, title, frente, priority, description, challengeColor 
       {...attributes}
       {...listeners}
       className={`
-        bg-zinc-800/80 rounded-lg p-3 border-l-4 cursor-grab active:cursor-grabbing
-        hover:bg-zinc-700/80 transition-all duration-200
-        ${isDragging ? 'opacity-50 shadow-2xl scale-105' : 'shadow-md'}
+        bg-[#111] rounded-lg p-3 cursor-grab active:cursor-grabbing
+        border border-[#1f1f1f] hover:border-[#333] transition-all duration-150
+        group
+        ${isDragging ? 'opacity-50 shadow-xl scale-[1.02]' : ''}
       `}
     >
-      <h4 className="text-sm font-medium text-white mb-2 leading-tight">{title}</h4>
-      
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className={`text-xs px-2 py-0.5 rounded-full ${frenteStyles[frente] || frenteStyles.Ops}`}>
-          {frente}
-        </span>
-        <span className={`text-xs px-2 py-0.5 rounded-full border ${priorityStyles[priority]}`}>
-          {priority === 'high' ? '🔴' : priority === 'medium' ? '🟡' : '🟢'}
-        </span>
+      {/* Title row */}
+      <div className="flex items-start gap-2">
+        <span className="text-[#555] text-sm">☰</span>
+        <h4 className="text-sm text-white leading-tight flex-1">{title}</h4>
+        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button className="text-[#555] hover:text-white p-0.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+            </svg>
+          </button>
+          <button className="text-[#555] hover:text-red-400 p-0.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 6h18" />
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+            </svg>
+          </button>
+        </div>
       </div>
-      
-      {description && (
-        <p className="text-xs text-zinc-400 mt-2 line-clamp-2">{description}</p>
-      )}
+
+      {/* Tags row */}
+      <div className="flex items-center gap-2 mt-2.5 flex-wrap">
+        <span
+          className="text-xs px-2 py-0.5 rounded font-medium"
+          style={{ 
+            backgroundColor: `${frenteColor}20`,
+            color: frenteColor,
+          }}
+        >
+          {challengeEmoji} {frente}
+        </span>
+        {priority === 'high' && (
+          <span className="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400">
+            urgent
+          </span>
+        )}
+      </div>
     </div>
   );
 }

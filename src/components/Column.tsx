@@ -18,33 +18,49 @@ interface ColumnProps {
   name: string;
   color: string;
   cards: CardData[];
-  challenges: Record<string, { color: string }>;
+  challenges: Record<string, { color: string; emoji: string }>;
 }
+
+const columnColors: Record<string, string> = {
+  backlog: '#888888',
+  analise: '#f59e0b',
+  execucao: '#3b82f6',
+  review: '#8b5cf6',
+  done: '#00ff00',
+};
 
 export function Column({ id, name, color, cards, challenges }: ColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id });
+  const dotColor = columnColors[id] || color;
 
   return (
     <div
       className={`
-        flex flex-col bg-zinc-900/50 rounded-xl min-w-[280px] max-w-[280px]
-        border border-zinc-800 transition-all duration-200
-        ${isOver ? 'border-zinc-600 bg-zinc-900/80' : ''}
+        flex flex-col min-w-[300px] max-w-[300px]
+        transition-all duration-200
+        ${isOver ? 'opacity-80' : ''}
       `}
     >
-      <div 
-        className="p-3 border-b border-zinc-800 flex items-center gap-2"
-        style={{ borderTopColor: color, borderTopWidth: '3px', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}
-      >
-        <span className="text-sm font-semibold text-white">{name}</span>
-        <span className="text-xs text-zinc-500 bg-zinc-800 px-2 py-0.5 rounded-full">
-          {cards.length}
-        </span>
+      {/* Header */}
+      <div className="flex items-center gap-2 mb-3">
+        <span
+          className="w-2 h-2 rounded-full"
+          style={{ backgroundColor: dotColor }}
+        />
+        <span className="text-sm font-medium text-white">{name}</span>
+        <span className="text-xs text-[#555] ml-1">({cards.length})</span>
+        <button className="ml-auto text-[#555] hover:text-white transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
       </div>
-      
+
+      {/* Cards */}
       <div
         ref={setNodeRef}
-        className="flex-1 p-2 space-y-2 min-h-[200px] overflow-y-auto"
+        className="flex-1 space-y-2 min-h-[400px]"
       >
         <SortableContext items={cards.map(c => c.id)} strategy={verticalListSortingStrategy}>
           {cards.map((card) => (
@@ -55,7 +71,7 @@ export function Column({ id, name, color, cards, challenges }: ColumnProps) {
               frente={card.frente}
               priority={card.priority}
               description={card.description}
-              challengeColor={challenges[card.challengeId]?.color || '#6B7280'}
+              challengeEmoji={challenges[card.challengeId]?.emoji || '📋'}
             />
           ))}
         </SortableContext>
