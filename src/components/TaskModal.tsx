@@ -64,16 +64,16 @@ export function TaskModal({
           <div className="flex-1 pr-4">
             <div className="flex items-center gap-2 mb-2">
               <span
-                className="text-xs px-2 py-0.5 rounded font-medium"
+                className="text-xs px-2 py-0.5 rounded font-medium border"
                 style={{ 
-                  backgroundColor: `${frenteColor}20`,
+                  borderColor: frenteColor,
                   color: frenteColor,
                 }}
               >
                 {frente}
               </span>
               {priority === 'high' && (
-                <span className="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400">
+                <span className="text-xs px-2 py-0.5 rounded border border-red-500 text-red-400">
                   urgent
                 </span>
               )}
@@ -118,7 +118,7 @@ export function TaskModal({
                 <ol className="space-y-2">
                   {direcionais.passos.map((passo, i) => (
                     <li key={i} className="flex gap-3 text-[#ccc]">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a1a1a] border border-[#333] text-xs flex items-center justify-center text-[#888]">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full border border-[#333] text-xs flex items-center justify-center text-[#888]">
                         {i + 1}
                       </span>
                       <span className="leading-relaxed pt-0.5">{passo}</span>
@@ -186,11 +186,11 @@ export function TaskModal({
         <div className="flex items-center justify-end gap-3 p-4 border-t border-[#1f1f1f]">
           <button 
             onClick={onClose}
-            className="px-4 py-2 text-sm text-[#888] hover:text-white transition-colors"
+            className="px-4 py-2 text-sm border border-[#333] text-[#888] rounded-md hover:text-white hover:border-[#555] transition-colors"
           >
             Fechar
           </button>
-          <button className="px-4 py-2 text-sm bg-[#00ff00] text-black rounded-md font-medium hover:bg-[#00cc00] transition-colors">
+          <button className="px-4 py-2 text-sm border border-[#00ff00] text-[#00ff00] rounded-md font-medium hover:bg-[#00ff00]/10 transition-colors">
             Mover para Em Progresso
           </button>
         </div>

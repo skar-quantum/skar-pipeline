@@ -72,16 +72,16 @@ export function Card({ id, title, frente, priority, direcionais, onOpenModal }: 
       {/* Tags row */}
       <div className="flex items-center gap-2 mt-2.5 flex-wrap">
         <span
-          className="text-xs px-2 py-0.5 rounded font-medium"
+          className="text-xs px-2 py-0.5 rounded font-medium border"
           style={{ 
-            backgroundColor: `${frenteColor}20`,
+            borderColor: frenteColor,
             color: frenteColor,
           }}
         >
           {frente}
         </span>
         {priority === 'high' && (
-          <span className="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400">
+          <span className="text-xs px-2 py-0.5 rounded border border-red-500 text-red-400">
             urgent
           </span>
         )}

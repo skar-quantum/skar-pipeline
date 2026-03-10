@@ -20,13 +20,11 @@ import { CardData } from '@/types';
 import data from '@/data/challenges.json';
 
 export function Board() {
-  // Always use JSON data as source of truth, only persist column positions
   const [cardPositions, setCardPositions] = useState<Record<string, string>>({});
   const [activeCard, setActiveCard] = useState<CardData | null>(null);
   const [selectedChallenge, setSelectedChallenge] = useState<string>('all');
   const [selectedTask, setSelectedTask] = useState<CardData | null>(null);
 
-  // Merge JSON data with saved positions
   const cards: CardData[] = (data.cards as CardData[]).map(card => ({
     ...card,
     columnId: cardPositions[card.id] || card.columnId
@@ -82,19 +80,17 @@ export function Board() {
     setActiveCard(null);
   };
 
-  // Load saved positions from localStorage
   useEffect(() => {
     const saved = localStorage.getItem('skar-pipeline-positions');
     if (saved) {
       try {
         setCardPositions(JSON.parse(saved));
       } catch {
-        // ignore parse errors
+        // ignore
       }
     }
   }, []);
 
-  // Save positions to localStorage
   useEffect(() => {
     if (Object.keys(cardPositions).length > 0) {
       localStorage.setItem('skar-pipeline-positions', JSON.stringify(cardPositions));
@@ -118,7 +114,7 @@ export function Board() {
               Kanban de mudanças e backlog — gerenciado pela Skar
             </p>
           </div>
-          <button className="flex items-center gap-2 bg-[#00ff00] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#00cc00] transition-colors">
+          <button className="flex items-center gap-2 border border-[#00ff00] text-[#00ff00] px-4 py-2 rounded-md text-sm font-medium hover:bg-[#00ff00]/10 transition-colors">
             <span>+</span>
             Nova Task
           </button>
@@ -130,10 +126,10 @@ export function Board() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setSelectedChallenge('all')}
-            className={`px-3 py-1.5 rounded text-sm transition-colors ${
+            className={`px-3 py-1.5 rounded text-sm transition-colors border ${
               selectedChallenge === 'all'
-                ? 'bg-[#00ff00] text-black font-medium'
-                : 'text-[#888] hover:text-white hover:bg-[#1a1a1a]'
+                ? 'border-[#00ff00] text-[#00ff00]'
+                : 'border-[#333] text-[#888] hover:text-white hover:border-[#555]'
             }`}
           >
             Todos
@@ -142,10 +138,10 @@ export function Board() {
             <button
               key={challenge.id}
               onClick={() => setSelectedChallenge(challenge.id)}
-              className={`px-3 py-1.5 rounded text-sm transition-colors ${
+              className={`px-3 py-1.5 rounded text-sm transition-colors border ${
                 selectedChallenge === challenge.id
-                  ? 'bg-[#00ff00] text-black font-medium'
-                  : 'text-[#888] hover:text-white hover:bg-[#1a1a1a]'
+                  ? 'border-[#00ff00] text-[#00ff00]'
+                  : 'border-[#333] text-[#888] hover:text-white hover:border-[#555]'
               }`}
             >
               {challenge.name}
