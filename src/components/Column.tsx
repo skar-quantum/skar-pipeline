@@ -26,13 +26,13 @@ export function Column({ id, name, color, cards, onOpenTask }: ColumnProps) {
   return (
     <div
       className={`
-        flex flex-col min-w-[300px] max-w-[300px]
+        flex flex-col min-w-[300px] max-w-[300px] h-full
         transition-all duration-200
         ${isOver ? 'opacity-80' : ''}
       `}
     >
       {/* Header */}
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex-shrink-0 flex items-center gap-2 mb-3">
         <span
           className="w-2 h-2 rounded-full"
           style={{ backgroundColor: dotColor }}
@@ -47,10 +47,10 @@ export function Column({ id, name, color, cards, onOpenTask }: ColumnProps) {
         </button>
       </div>
 
-      {/* Cards */}
+      {/* Cards - Scrollable */}
       <div
         ref={setNodeRef}
-        className="flex-1 space-y-2 min-h-[400px]"
+        className="flex-1 space-y-2 overflow-y-auto overflow-x-hidden pr-1"
       >
         <SortableContext items={cards.map(c => c.id)} strategy={verticalListSortingStrategy}>
           {cards.map((card) => (

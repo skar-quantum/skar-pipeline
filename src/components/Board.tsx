@@ -102,9 +102,9 @@ export function Board() {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="h-screen flex flex-col bg-black overflow-hidden">
       {/* Header */}
-      <header className="border-b border-[#1f1f1f] px-6 py-4">
+      <header className="flex-shrink-0 border-b border-[#1f1f1f] px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold text-white">
@@ -122,7 +122,7 @@ export function Board() {
       </header>
 
       {/* Filters */}
-      <div className="px-6 py-4 border-b border-[#1f1f1f]">
+      <div className="flex-shrink-0 px-6 py-4 border-b border-[#1f1f1f]">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setSelectedChallenge('all')}
@@ -151,7 +151,7 @@ export function Board() {
       </div>
 
       {/* Board */}
-      <div className="p-6">
+      <div className="flex-1 p-6 overflow-hidden">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCorners}
@@ -159,7 +159,7 @@ export function Board() {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <div className="flex gap-4 overflow-x-auto pb-4">
+          <div className="flex gap-4 h-full">
             {data.columns.map((column) => (
               <Column
                 key={column.id}
