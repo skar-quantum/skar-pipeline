@@ -108,7 +108,7 @@ export function Board() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold text-white">
-              Pipeline
+              PRIMEIRO PROJETO DA SKAR
             </h1>
             <p className="text-sm text-[#555] mt-0.5">
               Kanban de mudanças e backlog — gerenciado pela Skar

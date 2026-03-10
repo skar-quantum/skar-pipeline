@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Skar Pipeline | LOUD",
+  title: "Primeiro Projeto da Skar | LOUD",
   description: "Gestão de Challenges do Skar Quantum",
 };
 
