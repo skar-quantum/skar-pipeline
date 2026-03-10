@@ -60,7 +60,6 @@ export function Card({ id, title, frente, priority, direcionais, onOpenModal }: 
     >
       {/* Title row */}
       <div className="flex items-start gap-2">
-        <span className="text-[#555] text-sm select-none">::</span>
         <h4 className="text-sm text-white leading-tight flex-1">{title}</h4>
         {direcionais && (
           <span className="text-[#00ff00] text-xs opacity-60 group-hover:opacity-100 transition-opacity select-none">
