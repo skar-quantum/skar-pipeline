@@ -102,7 +102,7 @@ export function Board() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-black overflow-hidden">
+    <div className="h-full flex flex-col bg-black overflow-hidden">
       {/* Header */}
       <header className="flex-shrink-0 border-b border-[#1f1f1f] px-6 py-4">
         <div className="flex items-center justify-between">
