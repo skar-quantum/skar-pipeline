@@ -50,7 +50,7 @@ export function Column({ id, name, color, cards, onOpenTask }: ColumnProps) {
       {/* Cards - Scrollable */}
       <div
         ref={setNodeRef}
-        className="flex-1 space-y-2 overflow-y-auto overflow-x-hidden pr-1"
+        className="flex-1 min-h-0 space-y-2 overflow-y-auto overflow-x-hidden pr-1"
       >
         <SortableContext items={cards.map(c => c.id)} strategy={verticalListSortingStrategy}>
           {cards.map((card) => (

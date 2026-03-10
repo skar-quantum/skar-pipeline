@@ -151,7 +151,7 @@ export function Board() {
       </div>
 
       {/* Board */}
-      <div className="flex-1 p-6 overflow-hidden">
+      <div className="flex-1 min-h-0 p-6 overflow-hidden">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCorners}
@@ -159,7 +159,7 @@ export function Board() {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <div className="flex gap-4 h-full">
+          <div className="flex gap-4 h-full min-h-0">
             {data.columns.map((column) => (
               <Column
                 key={column.id}
